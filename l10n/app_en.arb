@@ -1,0 +1,21 @@
+{
+  "@@locale": "en",
+  "appTitle": "Mind2Matter Mood Tracker",
+  "moodPrompt": "How do you feel right now?",
+  "timelineTitle": "Last 7 mood entries",
+  "emptyTimeline": "No moods logged yet.",
+  "moodHappy": "Happy",
+  "moodExcited": "Excited",
+  "moodCalm": "Calm",
+  "moodNeutral": "Neutral",
+  "moodAnxious": "Anxious",
+  "moodSad": "Sad",
+  "moodTired": "Tired",
+  "entryOnDate": "{mood} on {date}",
+  "@entryOnDate": {
+    "placeholders": {
+      "mood": {},
+      "date": {}
+    }
+  }
+}
