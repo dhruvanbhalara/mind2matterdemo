@@ -12,10 +12,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Mind2Matter Mood Tracker';
 
   @override
+  String get pageSubtitle =>
+      'Log today\'s feeling and watch your weekly mood rhythm.';
+
+  @override
   String get moodPrompt => 'How do you feel right now?';
 
   @override
+  String get moodSectionTitle => 'Tap a mood';
+
+  @override
   String get timelineTitle => 'Last 7 mood entries';
+
+  @override
+  String get timelineHint => 'Tap any past entry to replay its animation.';
 
   @override
   String get emptyTimeline => 'No moods logged yet.';

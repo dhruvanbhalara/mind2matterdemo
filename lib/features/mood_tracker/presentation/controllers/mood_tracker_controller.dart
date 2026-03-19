@@ -16,6 +16,7 @@ class MoodTrackerController extends ChangeNotifier {
   final GetRecentMoodEntriesUseCase _getRecentMoodEntriesUseCase;
 
   List<MoodEntry> get entries => _getRecentMoodEntriesUseCase();
+  Mood? get currentMood => entries.isEmpty ? null : entries.first.mood;
 
   void logMood(Mood mood) {
     _logMoodUseCase(mood);

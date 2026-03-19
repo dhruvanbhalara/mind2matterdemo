@@ -1,8 +1,11 @@
 {
   "@@locale": "en",
   "appTitle": "Mind2Matter Mood Tracker",
+  "pageSubtitle": "Log today's feeling and watch your weekly mood rhythm.",
   "moodPrompt": "How do you feel right now?",
+  "moodSectionTitle": "Tap a mood",
   "timelineTitle": "Last 7 mood entries",
+  "timelineHint": "Tap any past entry to replay its animation.",
   "emptyTimeline": "No moods logged yet.",
   "moodHappy": "Happy",
   "moodExcited": "Excited",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:mind2matterdemo/app/theme/app_colors.dart';
 import 'package:mind2matterdemo/l10n/app_localizations.dart';
 import '../../domain/entities/mood.dart';
 import '../../domain/entities/mood_entry.dart';
@@ -68,14 +69,21 @@ class _MoodEntryTileState extends State<MoodEntryTile>
           return Transform.scale(scale: _scaleAnimation.value, child: child);
         },
         child: Container(
-          width: 132,
+          width: 144,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: widget.entry.mood.accentColor.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(16),
+            color: widget.entry.mood.accentColor.withValues(alpha: 0.14),
+            borderRadius: BorderRadius.circular(18),
             border: Border.all(
               color: widget.entry.mood.accentColor.withValues(alpha: 0.4),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: widget.entry.mood.accentColor.withValues(alpha: 0.18),
+                blurRadius: 10,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +97,9 @@ class _MoodEntryTileState extends State<MoodEntryTile>
                 ),
                 maxLines: 2,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: AppColors.text),
               ),
             ],
           ),

@@ -1,32 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-
+import 'package:mind2matterdemo/app/theme/app_colors.dart';
 import 'package:mind2matterdemo/l10n/app_localizations.dart';
+
 import '../../domain/entities/mood.dart';
 import 'mood_face.dart';
 
 class MoodSelector extends StatelessWidget {
-  const MoodSelector({required this.onMoodSelected, super.key});
+  const MoodSelector({
+    required this.onMoodSelected,
+    super.key,
+    this.selectedMood,
+  });
 
   final ValueChanged<Mood> onMoodSelected;
+  final Mood? selectedMood;
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 12,
-      runSpacing: 12,
-      children: [
-        for (final Mood mood in Mood.values)
-          SizedBox(
-            width: 112,
-            child: _MoodButton(
-              icon: _iconForMood(mood),
-              label: _labelForMood(AppLocalizations.of(context), mood),
-              mood: mood,
-              onTap: onMoodSelected,
-            ),
-          ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final int columns = constraints.maxWidth > 900
+            ? 7
+            : constraints.maxWidth > 640
+            ? 4
+            : 2;
+        final double totalSpacing = (columns - 1) * 12;
+        final double itemWidth =
+            (constraints.maxWidth - totalSpacing) / columns;
+
+        return Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            for (final Mood mood in Mood.values)
+              SizedBox(
+                width: itemWidth,
+                child: _MoodButton(
+                  icon: _iconForMood(mood),
+                  label: _labelForMood(AppLocalizations.of(context), mood),
+                  mood: mood,
+                  isSelected: selectedMood == mood,
+                  onTap: onMoodSelected,
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 
@@ -74,35 +94,60 @@ class _MoodButton extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.mood,
+    required this.isSelected,
     required this.onTap,
   });
 
   final IconData icon;
   final String label;
   final Mood mood;
+  final bool isSelected;
   final ValueChanged<Mood> onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(20),
       onTap: () => onTap(mood),
-      child: Ink(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOut,
         decoration: BoxDecoration(
-          color: mood.accentColor.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: mood.accentColor.withValues(alpha: 0.35)),
+          color: isSelected
+              ? mood.accentColor.withValues(alpha: 0.20)
+              : mood.accentColor.withValues(alpha: 0.10),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected
+                ? mood.accentColor.withValues(alpha: 0.9)
+                : mood.accentColor.withValues(alpha: 0.3),
+            width: isSelected ? 2 : 1,
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: mood.accentColor.withValues(alpha: 0.25),
+                    blurRadius: 14,
+                    offset: const Offset(0, 6),
+                  ),
+                ]
+              : const [],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 14),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(icon, color: mood.accentColor, size: 20),
               const SizedBox(height: 8),
-              MoodFace(mood: mood, size: 48),
+              MoodFace(mood: mood, size: 44),
               const SizedBox(height: 8),
-              Text(label),
+              Text(
+                label,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: isSelected ? AppColors.text : AppColors.mutedText,
+                ),
+              ),
             ],
           ),
         ),

@@ -15,6 +15,12 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.surface,
       cardColor: AppColors.card,
       textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+          color: AppColors.text,
+          fontWeight: FontWeight.w800,
+          fontSize: 36,
+          height: 1.15,
+        ),
         headlineSmall: TextStyle(
           color: AppColors.text,
           fontWeight: FontWeight.w700,
@@ -26,6 +32,12 @@ class AppTheme {
           fontSize: 18,
         ),
         bodyMedium: TextStyle(color: AppColors.mutedText, fontSize: 16),
+        bodySmall: TextStyle(color: AppColors.mutedText, fontSize: 14),
+        labelLarge: TextStyle(
+          color: AppColors.text,
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
+        ),
       ),
       useMaterial3: true,
     );

@@ -100,17 +100,35 @@ abstract class AppLocalizations {
   /// **'Mind2Matter Mood Tracker'**
   String get appTitle;
 
+  /// No description provided for @pageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log today\'s feeling and watch your weekly mood rhythm.'**
+  String get pageSubtitle;
+
   /// No description provided for @moodPrompt.
   ///
   /// In en, this message translates to:
   /// **'How do you feel right now?'**
   String get moodPrompt;
 
+  /// No description provided for @moodSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a mood'**
+  String get moodSectionTitle;
+
   /// No description provided for @timelineTitle.
   ///
   /// In en, this message translates to:
   /// **'Last 7 mood entries'**
   String get timelineTitle;
+
+  /// No description provided for @timelineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any past entry to replay its animation.'**
+  String get timelineHint;
 
   /// No description provided for @emptyTimeline.
   ///
