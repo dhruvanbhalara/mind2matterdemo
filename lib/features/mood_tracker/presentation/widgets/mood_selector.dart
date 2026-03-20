@@ -169,7 +169,18 @@ class _MoodButtonState extends State<_MoodButton> {
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.easeOut,
                     scale: _isHovered ? 1.08 : 1,
-                    child: MoodFace(mood: widget.mood, size: 44),
+                    child: TweenAnimationBuilder<double>(
+                      tween: Tween<double>(begin: 0, end: isActive ? 1 : 0),
+                      duration: const Duration(milliseconds: 230),
+                      curve: Curves.easeOut,
+                      builder: (context, value, child) {
+                        return MoodFace(
+                          mood: widget.mood,
+                          size: 44,
+                          animationValue: value,
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(

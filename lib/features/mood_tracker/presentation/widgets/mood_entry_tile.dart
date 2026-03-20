@@ -103,7 +103,13 @@ class _MoodEntryTileState extends State<MoodEntryTile>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MoodFace(mood: widget.entry.mood, size: 44),
+                MoodFace(
+                  mood: widget.entry.mood,
+                  size: 44,
+                  animationValue: _isHovered
+                      ? 0.45 + (_animationController.value * 0.55)
+                      : _animationController.value,
+                ),
                 const SizedBox(height: 10),
                 Text(
                   localizations.entryOnDate(
