@@ -126,77 +126,81 @@ class _MoodButtonState extends State<_MoodButton> {
           duration: const Duration(milliseconds: 180),
           curve: Curves.easeOut,
           scale: _isHovered ? 1.03 : 1,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOut,
-            decoration: BoxDecoration(
-              color: isActive
-                  ? widget.mood.accentColor.withValues(alpha: 0.20)
-                  : widget.mood.accentColor.withValues(alpha: 0.10),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
+          child: RepaintBoundary(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 220),
+              curve: Curves.easeOut,
+              decoration: BoxDecoration(
                 color: isActive
-                    ? widget.mood.accentColor.withValues(alpha: 0.9)
-                    : widget.mood.accentColor.withValues(alpha: 0.3),
-                width: isActive ? 2 : 1,
+                    ? widget.mood.accentColor.withValues(alpha: 0.20)
+                    : widget.mood.accentColor.withValues(alpha: 0.10),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: isActive
+                      ? widget.mood.accentColor.withValues(alpha: 0.9)
+                      : widget.mood.accentColor.withValues(alpha: 0.3),
+                  width: 1.5,
+                ),
+                boxShadow: isActive
+                    ? [
+                        BoxShadow(
+                          color: widget.mood.accentColor.withValues(
+                            alpha: 0.25,
+                          ),
+                          blurRadius: 14,
+                          offset: const Offset(0, 6),
+                        ),
+                      ]
+                    : const [],
               ),
-              boxShadow: isActive
-                  ? [
-                      BoxShadow(
-                        color: widget.mood.accentColor.withValues(alpha: 0.25),
-                        blurRadius: 14,
-                        offset: const Offset(0, 6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedRotation(
+                      duration: const Duration(milliseconds: 200),
+                      turns: _isHovered ? 0.03 : 0,
+                      child: Icon(
+                        widget.icon,
+                        color: widget.mood.accentColor,
+                        size: 20,
                       ),
-                    ]
-                  : const [],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedRotation(
-                    duration: const Duration(milliseconds: 200),
-                    turns: _isHovered ? 0.03 : 0,
-                    child: Icon(
-                      widget.icon,
-                      color: widget.mood.accentColor,
-                      size: 20,
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  AnimatedScale(
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeOut,
-                    scale: _isHovered ? 1.08 : 1,
-                    child: TweenAnimationBuilder<double>(
-                      tween: Tween<double>(
-                        begin: 0,
-                        end: widget.isSelected
-                            ? 0.22
-                            : _isHovered
-                            ? 0.16
-                            : 0,
-                      ),
-                      duration: const Duration(milliseconds: 230),
+                    const SizedBox(height: 8),
+                    AnimatedScale(
+                      duration: const Duration(milliseconds: 200),
                       curve: Curves.easeOut,
-                      builder: (context, value, child) {
-                        return MoodFace(
-                          mood: widget.mood,
-                          size: 44,
-                          animationValue: value,
-                        );
-                      },
+                      scale: _isHovered ? 1.08 : 1,
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(
+                          begin: 0,
+                          end: widget.isSelected
+                              ? 0.22
+                              : _isHovered
+                              ? 0.16
+                              : 0,
+                        ),
+                        duration: const Duration(milliseconds: 230),
+                        curve: Curves.easeOut,
+                        builder: (context, value, child) {
+                          return MoodFace(
+                            mood: widget.mood,
+                            size: 44,
+                            animationValue: value,
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.label,
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: isActive ? AppColors.text : AppColors.mutedText,
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.label,
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: isActive ? AppColors.text : AppColors.mutedText,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -89,6 +89,7 @@ class _MoodEntryTileState extends State<MoodEntryTile>
                 color: widget.entry.mood.accentColor.withValues(
                   alpha: _isHovered ? 0.75 : 0.4,
                 ),
+                width: 1.5,
               ),
               boxShadow: [
                 BoxShadow(
@@ -100,29 +101,31 @@ class _MoodEntryTileState extends State<MoodEntryTile>
                 ),
               ],
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MoodFace(
-                  mood: widget.entry.mood,
-                  size: 44,
-                  animationValue: _isHovered
-                      ? 0.14 + (_animationController.value * 0.24)
-                      : _animationController.value * 0.32,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  localizations.entryOnDate(
-                    _labelForMood(localizations),
-                    formattedDate,
+            child: RepaintBoundary(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MoodFace(
+                    mood: widget.entry.mood,
+                    size: 44,
+                    animationValue: _isHovered
+                        ? 0.14 + (_animationController.value * 0.24)
+                        : _animationController.value * 0.32,
                   ),
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: AppColors.text),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  Text(
+                    localizations.entryOnDate(
+                      _labelForMood(localizations),
+                      formattedDate,
+                    ),
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodySmall?.copyWith(color: AppColors.text),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
