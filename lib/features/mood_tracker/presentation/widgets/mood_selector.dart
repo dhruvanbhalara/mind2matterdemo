@@ -89,7 +89,7 @@ class MoodSelector extends StatelessWidget {
   }
 }
 
-class _MoodButton extends StatelessWidget {
+class _MoodButton extends StatefulWidget {
   const _MoodButton({
     required this.icon,
     required this.label,
@@ -105,50 +105,82 @@ class _MoodButton extends StatelessWidget {
   final ValueChanged<Mood> onTap;
 
   @override
+  State<_MoodButton> createState() => _MoodButtonState();
+}
+
+class _MoodButtonState extends State<_MoodButton> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
+    final bool isActive = widget.isSelected || _isHovered;
+
     return InkWell(
       borderRadius: BorderRadius.circular(20),
-      onTap: () => onTap(mood),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        curve: Curves.easeOut,
-        decoration: BoxDecoration(
-          color: isSelected
-              ? mood.accentColor.withValues(alpha: 0.20)
-              : mood.accentColor.withValues(alpha: 0.10),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isSelected
-                ? mood.accentColor.withValues(alpha: 0.9)
-                : mood.accentColor.withValues(alpha: 0.3),
-            width: isSelected ? 2 : 1,
-          ),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: mood.accentColor.withValues(alpha: 0.25),
-                    blurRadius: 14,
-                    offset: const Offset(0, 6),
-                  ),
-                ]
-              : const [],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: mood.accentColor, size: 20),
-              const SizedBox(height: 8),
-              MoodFace(mood: mood, size: 44),
-              const SizedBox(height: 8),
-              Text(
-                label,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: isSelected ? AppColors.text : AppColors.mutedText,
-                ),
+      onTap: () => widget.onTap(widget.mood),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: AnimatedScale(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOut,
+          scale: _isHovered ? 1.03 : 1,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOut,
+            decoration: BoxDecoration(
+              color: isActive
+                  ? widget.mood.accentColor.withValues(alpha: 0.20)
+                  : widget.mood.accentColor.withValues(alpha: 0.10),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: isActive
+                    ? widget.mood.accentColor.withValues(alpha: 0.9)
+                    : widget.mood.accentColor.withValues(alpha: 0.3),
+                width: isActive ? 2 : 1,
               ),
-            ],
+              boxShadow: isActive
+                  ? [
+                      BoxShadow(
+                        color: widget.mood.accentColor.withValues(alpha: 0.25),
+                        blurRadius: 14,
+                        offset: const Offset(0, 6),
+                      ),
+                    ]
+                  : const [],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AnimatedRotation(
+                    duration: const Duration(milliseconds: 200),
+                    turns: _isHovered ? 0.03 : 0,
+                    child: Icon(
+                      widget.icon,
+                      color: widget.mood.accentColor,
+                      size: 20,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  AnimatedScale(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeOut,
+                    scale: _isHovered ? 1.08 : 1,
+                    child: MoodFace(mood: widget.mood, size: 44),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    widget.label,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: isActive ? AppColors.text : AppColors.mutedText,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

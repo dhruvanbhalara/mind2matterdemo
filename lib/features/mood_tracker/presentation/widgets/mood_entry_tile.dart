@@ -19,6 +19,7 @@ class _MoodEntryTileState extends State<MoodEntryTile>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
   late final Animation<double> _scaleAnimation;
+  bool _isHovered = false;
 
   @override
   void initState() {
@@ -61,47 +62,62 @@ class _MoodEntryTileState extends State<MoodEntryTile>
       context,
     ).formatCompactDate(widget.entry.date);
 
-    return GestureDetector(
-      onTap: _playTapAnimation,
-      child: AnimatedBuilder(
-        animation: _scaleAnimation,
-        builder: (context, child) {
-          return Transform.scale(scale: _scaleAnimation.value, child: child);
-        },
-        child: Container(
-          width: 144,
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: widget.entry.mood.accentColor.withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: widget.entry.mood.accentColor.withValues(alpha: 0.4),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: widget.entry.mood.accentColor.withValues(alpha: 0.18),
-                blurRadius: 10,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              MoodFace(mood: widget.entry.mood, size: 44),
-              const SizedBox(height: 10),
-              Text(
-                localizations.entryOnDate(
-                  _labelForMood(localizations),
-                  formattedDate,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: _playTapAnimation,
+        child: AnimatedBuilder(
+          animation: _scaleAnimation,
+          builder: (context, child) {
+            final double interactiveScale = _isHovered ? 1.05 : 1;
+            return Transform.scale(
+              scale: _scaleAnimation.value * interactiveScale,
+              child: child,
+            );
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            curve: Curves.easeOut,
+            width: 144,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: widget.entry.mood.accentColor.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(
+                color: widget.entry.mood.accentColor.withValues(
+                  alpha: _isHovered ? 0.75 : 0.4,
                 ),
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: AppColors.text),
               ),
-            ],
+              boxShadow: [
+                BoxShadow(
+                  color: widget.entry.mood.accentColor.withValues(
+                    alpha: _isHovered ? 0.28 : 0.18,
+                  ),
+                  blurRadius: _isHovered ? 14 : 10,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MoodFace(mood: widget.entry.mood, size: 44),
+                const SizedBox(height: 10),
+                Text(
+                  localizations.entryOnDate(
+                    _labelForMood(localizations),
+                    formattedDate,
+                  ),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: AppColors.text),
+                ),
+              ],
+            ),
           ),
         ),
       ),
