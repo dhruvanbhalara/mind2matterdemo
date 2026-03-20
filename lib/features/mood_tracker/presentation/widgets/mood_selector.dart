@@ -170,7 +170,14 @@ class _MoodButtonState extends State<_MoodButton> {
                     curve: Curves.easeOut,
                     scale: _isHovered ? 1.08 : 1,
                     child: TweenAnimationBuilder<double>(
-                      tween: Tween<double>(begin: 0, end: isActive ? 1 : 0),
+                      tween: Tween<double>(
+                        begin: 0,
+                        end: widget.isSelected
+                            ? 0.22
+                            : _isHovered
+                            ? 0.16
+                            : 0,
+                      ),
                       duration: const Duration(milliseconds: 230),
                       curve: Curves.easeOut,
                       builder: (context, value, child) {

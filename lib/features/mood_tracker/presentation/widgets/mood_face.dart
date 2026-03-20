@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
 
 import '../../domain/entities/mood.dart';
 
@@ -54,9 +53,9 @@ class MoodFacePainter extends CustomPainter {
     canvas.drawCircle(center, radius - 2, fillPaint);
     canvas.drawCircle(center, radius - 2, strokePaint);
 
-    final double eyeY = size.height * (0.38 - (0.015 * t));
+    final double eyeY = size.height * (0.38 - (0.006 * t));
     final double eyeSpread = size.width * 0.18;
-    final double eyeRadius = size.width * (0.04 + (0.006 * t));
+    final double eyeRadius = size.width * (0.04 + (0.002 * t));
 
     canvas.drawCircle(
       Offset(center.dx - eyeSpread, eyeY),
@@ -80,28 +79,28 @@ class MoodFacePainter extends CustomPainter {
     switch (mood) {
       case Mood.happy:
         leftPath
-          ..moveTo(size.width * 0.25, size.height * (0.26 - (0.012 * t)))
+          ..moveTo(size.width * 0.25, size.height * (0.26 - (0.006 * t)))
           ..quadraticBezierTo(
             size.width * 0.32,
-            size.height * (0.20 - (0.01 * t)),
+            size.height * (0.20 - (0.005 * t)),
             size.width * 0.38,
-            size.height * (0.26 - (0.012 * t)),
+            size.height * (0.26 - (0.006 * t)),
           );
         rightPath
-          ..moveTo(size.width * 0.62, size.height * (0.26 - (0.012 * t)))
+          ..moveTo(size.width * 0.62, size.height * (0.26 - (0.006 * t)))
           ..quadraticBezierTo(
             size.width * 0.68,
-            size.height * (0.20 - (0.01 * t)),
+            size.height * (0.20 - (0.005 * t)),
             size.width * 0.75,
-            size.height * (0.26 - (0.012 * t)),
+            size.height * (0.26 - (0.006 * t)),
           );
       case Mood.excited:
         leftPath
-          ..moveTo(size.width * 0.25, size.height * (0.24 - (0.014 * t)))
-          ..lineTo(size.width * 0.38, size.height * (0.18 - (0.018 * t)));
+          ..moveTo(size.width * 0.25, size.height * (0.24 - (0.006 * t)))
+          ..lineTo(size.width * 0.38, size.height * (0.18 - (0.008 * t)));
         rightPath
-          ..moveTo(size.width * 0.62, size.height * (0.18 - (0.018 * t)))
-          ..lineTo(size.width * 0.75, size.height * (0.24 - (0.014 * t)));
+          ..moveTo(size.width * 0.62, size.height * (0.18 - (0.008 * t)))
+          ..lineTo(size.width * 0.75, size.height * (0.24 - (0.006 * t)));
       case Mood.calm:
         leftPath
           ..moveTo(size.width * 0.25, size.height * (0.26 - (0.004 * t)))
@@ -128,25 +127,25 @@ class MoodFacePainter extends CustomPainter {
           ..lineTo(size.width * 0.75, size.height * (0.24 - (0.004 * t)));
       case Mood.anxious:
         leftPath
-          ..moveTo(size.width * 0.25, size.height * (0.30 + (0.006 * t)))
-          ..lineTo(size.width * 0.38, size.height * (0.22 - (0.006 * t)));
+          ..moveTo(size.width * 0.25, size.height * (0.29 + (0.002 * t)))
+          ..lineTo(size.width * 0.38, size.height * (0.23 - (0.002 * t)));
         rightPath
-          ..moveTo(size.width * 0.62, size.height * (0.22 - (0.006 * t)))
-          ..lineTo(size.width * 0.75, size.height * (0.30 + (0.006 * t)));
+          ..moveTo(size.width * 0.62, size.height * (0.23 - (0.002 * t)))
+          ..lineTo(size.width * 0.75, size.height * (0.29 + (0.002 * t)));
       case Mood.sad:
         leftPath
-          ..moveTo(size.width * 0.25, size.height * (0.24 + (0.005 * t)))
-          ..lineTo(size.width * 0.38, size.height * (0.29 + (0.008 * t)));
+          ..moveTo(size.width * 0.25, size.height * (0.24 + (0.002 * t)))
+          ..lineTo(size.width * 0.38, size.height * (0.29 + (0.003 * t)));
         rightPath
-          ..moveTo(size.width * 0.62, size.height * (0.29 + (0.008 * t)))
-          ..lineTo(size.width * 0.75, size.height * (0.24 + (0.005 * t)));
+          ..moveTo(size.width * 0.62, size.height * (0.29 + (0.003 * t)))
+          ..lineTo(size.width * 0.75, size.height * (0.24 + (0.002 * t)));
       case Mood.tired:
         leftPath
-          ..moveTo(size.width * 0.24, size.height * (0.28 + (0.01 * t)))
-          ..lineTo(size.width * 0.39, size.height * (0.28 + (0.01 * t)));
+          ..moveTo(size.width * 0.24, size.height * (0.28 + (0.004 * t)))
+          ..lineTo(size.width * 0.39, size.height * (0.28 + (0.004 * t)));
         rightPath
-          ..moveTo(size.width * 0.61, size.height * (0.28 + (0.01 * t)))
-          ..lineTo(size.width * 0.76, size.height * (0.28 + (0.01 * t)));
+          ..moveTo(size.width * 0.61, size.height * (0.28 + (0.004 * t)))
+          ..lineTo(size.width * 0.76, size.height * (0.28 + (0.004 * t)));
     }
 
     canvas.drawPath(leftPath, paint);
@@ -158,24 +157,30 @@ class MoodFacePainter extends CustomPainter {
       case Mood.happy:
         canvas.drawArc(
           Rect.fromCenter(
-            center: Offset(size.width * 0.5, size.height * (0.58 - (0.01 * t))),
+            center: Offset(
+              size.width * 0.5,
+              size.height * (0.58 - (0.004 * t)),
+            ),
             width: size.width * 0.42,
-            height: size.height * (0.28 + (0.06 * t)),
+            height: size.height * (0.28 + (0.02 * t)),
           ),
           0.2,
-          2.7 + (0.2 * t),
+          2.7 + (0.08 * t),
           false,
           paint,
         );
       case Mood.excited:
         canvas.drawArc(
           Rect.fromCenter(
-            center: Offset(size.width * 0.5, size.height * (0.60 - (0.01 * t))),
+            center: Offset(
+              size.width * 0.5,
+              size.height * (0.60 - (0.004 * t)),
+            ),
             width: size.width * 0.44,
-            height: size.height * (0.36 + (0.08 * t)),
+            height: size.height * (0.36 + (0.03 * t)),
           ),
           0.15,
-          2.85 + (0.28 * t),
+          2.85 + (0.1 * t),
           false,
           paint,
         );
@@ -196,24 +201,34 @@ class MoodFacePainter extends CustomPainter {
         );
       case Mood.neutral:
         final Path neutralMouth = Path()
-          ..moveTo(size.width * 0.35, size.height * (0.62 - (0.004 * t)))
-          ..lineTo(size.width * 0.65, size.height * (0.62 - (0.004 * t)));
+          ..moveTo(size.width * 0.35, size.height * (0.62 - (0.002 * t)))
+          ..lineTo(size.width * 0.65, size.height * (0.62 - (0.002 * t)));
         canvas.drawPath(neutralMouth, paint);
       case Mood.anxious:
-        final double jitter = ui.lerpDouble(0, size.height * 0.01, t)!;
         final Path anxiousMouth = Path()
-          ..moveTo(size.width * 0.35, size.height * (0.65 + jitter))
-          ..lineTo(size.width * 0.42, size.height * (0.60 - jitter))
-          ..lineTo(size.width * 0.50, size.height * (0.66 + jitter))
-          ..lineTo(size.width * 0.58, size.height * (0.60 - jitter))
-          ..lineTo(size.width * 0.65, size.height * (0.65 + jitter));
+          ..moveTo(size.width * 0.35, size.height * (0.65 + (0.002 * t)))
+          ..quadraticBezierTo(
+            size.width * 0.45,
+            size.height * (0.62 - (0.003 * t)),
+            size.width * 0.50,
+            size.height * (0.66 + (0.003 * t)),
+          )
+          ..quadraticBezierTo(
+            size.width * 0.55,
+            size.height * (0.62 - (0.003 * t)),
+            size.width * 0.65,
+            size.height * (0.65 + (0.002 * t)),
+          );
         canvas.drawPath(anxiousMouth, paint);
       case Mood.sad:
         canvas.drawArc(
           Rect.fromCenter(
-            center: Offset(size.width * 0.5, size.height * (0.72 + (0.01 * t))),
+            center: Offset(
+              size.width * 0.5,
+              size.height * (0.72 + (0.004 * t)),
+            ),
             width: size.width * 0.42,
-            height: size.height * (0.25 + (0.03 * t)),
+            height: size.height * (0.25 + (0.01 * t)),
           ),
           3.5,
           2.6,
@@ -222,8 +237,8 @@ class MoodFacePainter extends CustomPainter {
         );
       case Mood.tired:
         final Path tiredMouth = Path()
-          ..moveTo(size.width * 0.35, size.height * (0.67 + (0.008 * t)))
-          ..lineTo(size.width * 0.65, size.height * (0.67 + (0.008 * t)));
+          ..moveTo(size.width * 0.35, size.height * (0.67 + (0.003 * t)))
+          ..lineTo(size.width * 0.65, size.height * (0.67 + (0.003 * t)));
         canvas.drawPath(tiredMouth, paint);
     }
   }

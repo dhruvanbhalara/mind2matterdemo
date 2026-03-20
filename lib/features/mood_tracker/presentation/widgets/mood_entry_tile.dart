@@ -107,8 +107,8 @@ class _MoodEntryTileState extends State<MoodEntryTile>
                   mood: widget.entry.mood,
                   size: 44,
                   animationValue: _isHovered
-                      ? 0.45 + (_animationController.value * 0.55)
-                      : _animationController.value,
+                      ? 0.14 + (_animationController.value * 0.24)
+                      : _animationController.value * 0.32,
                 ),
                 const SizedBox(height: 10),
                 Text(
